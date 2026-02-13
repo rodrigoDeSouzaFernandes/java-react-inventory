@@ -1,4 +1,4 @@
-package com.autoflex.inventory.rawmaterial;
+package com.autoflex.inventory.rawmaterial.DTO;
 
 public class RawMaterialDTO {
     public Long id;

@@ -1,5 +1,8 @@
 package com.autoflex.inventory.shared;
 
+import java.io.ObjectInputFilter.Status;
+
+import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
@@ -12,15 +15,15 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
     public Response toResponse(Throwable exception) {
         ErrorResponse errorResponse;
 
-        if (exception instanceof jakarta.ws.rs.NotFoundException) {
+        if (exception instanceof jakarta.ws.rs.WebApplicationException webEx) {
             errorResponse = new ErrorResponse(exception.getMessage());
-            return Response.status(Response.Status.NOT_FOUND)
+            return Response.status(webEx.getResponse().getStatus()) 
                     .entity(errorResponse)
                     .type(MediaType.APPLICATION_JSON)
                     .build();
         }
 
-        if (exception instanceof BusinessException) { 
+        if (exception instanceof BusinessException) {
             errorResponse = new ErrorResponse(exception.getMessage());
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(errorResponse)
@@ -28,7 +31,7 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
                     .build();
         }
 
-        errorResponse = new ErrorResponse("Internal server error");
+        errorResponse = new ErrorResponse("Internal server error.");
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .entity(errorResponse)
                 .type(MediaType.APPLICATION_JSON)

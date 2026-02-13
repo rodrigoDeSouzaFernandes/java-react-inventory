@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.autoflex.inventory.product.DTO.ProductWithQuantityDTO;
 import com.autoflex.inventory.relationship.ProductRawMaterial;
 
 @ApplicationScoped

@@ -2,13 +2,15 @@ package com.autoflex.inventory.product;
 
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.List;
 
-import com.autoflex.inventory.shared.BusinessException;
+import com.autoflex.inventory.product.DTO.ProductCreateDTO;
+import com.autoflex.inventory.product.DTO.ProductWithQuantityDTO;
 
 @Path("/products")
 @Produces(MediaType.APPLICATION_JSON)
@@ -24,6 +26,7 @@ public class ProductResource {
     @GET
     public List<ProductWithQuantityDTO> list(
             @QueryParam("productibleOnly") @DefaultValue("false") boolean productibleOnly) {
+
         return productService.listProductsWithQuantity(productibleOnly);
     }
 
@@ -47,8 +50,14 @@ public class ProductResource {
 
     @POST
     @Transactional
-    public Response create(Product product) {
+    public Response create(@Valid ProductCreateDTO dto) {
+
+        Product product = new Product();
+        product.setName(dto.name);
+        product.setValue(dto.value);
+
         productRepository.persist(product);
+
         return Response
                 .created(URI.create("/products/" + product.getId()))
                 .entity(product)

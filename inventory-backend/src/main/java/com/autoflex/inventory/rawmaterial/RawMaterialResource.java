@@ -2,12 +2,16 @@ package com.autoflex.inventory.rawmaterial;
 
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.autoflex.inventory.rawmaterial.DTO.RawMaterialCreateDTO;
+import com.autoflex.inventory.rawmaterial.DTO.RawMaterialDTO;
 
 @Path("/raw-materials")
 @Produces(MediaType.APPLICATION_JSON)
@@ -49,7 +53,11 @@ public class RawMaterialResource {
 
     @POST
     @Transactional
-    public Response create(RawMaterial rawMaterial) {
+    public Response create(@Valid RawMaterialCreateDTO dto) {
+        RawMaterial rawMaterial = new RawMaterial();
+        rawMaterial.setName(dto.name);
+        rawMaterial.setStockQuantity(dto.stockQuantity);
+
         rawMaterialRepository.persist(rawMaterial);
         return Response
                 .created(URI.create("/raw-materials/" + rawMaterial.getId()))
