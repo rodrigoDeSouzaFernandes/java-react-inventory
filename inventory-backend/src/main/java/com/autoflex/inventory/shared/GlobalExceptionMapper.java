@@ -1,8 +1,6 @@
 package com.autoflex.inventory.shared;
 
-import java.io.ObjectInputFilter.Status;
-
-import jakarta.ws.rs.InternalServerErrorException;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
@@ -15,7 +13,7 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
     public Response toResponse(Throwable exception) {
         ErrorResponse errorResponse;
 
-        if (exception instanceof jakarta.ws.rs.WebApplicationException webEx) {
+        if (exception instanceof WebApplicationException webEx) {
             errorResponse = new ErrorResponse(exception.getMessage());
             return Response.status(webEx.getResponse().getStatus()) 
                     .entity(errorResponse)
