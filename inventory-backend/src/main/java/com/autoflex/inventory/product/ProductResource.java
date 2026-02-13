@@ -8,6 +8,8 @@ import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.List;
 
+import com.autoflex.inventory.shared.BusinessException;
+
 @Path("/products")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -20,8 +22,8 @@ public class ProductResource {
     ProductService productService;
 
     @GET
-    public List<ProductWithQuantityDTO> list(@QueryParam("productibleOnly") @DefaultValue("false") boolean productibleOnly) {
-        // chama o service que já calcula a quantidade
+    public List<ProductWithQuantityDTO> list(
+            @QueryParam("productibleOnly") @DefaultValue("false") boolean productibleOnly) {
         return productService.listProductsWithQuantity(productibleOnly);
     }
 
@@ -63,7 +65,7 @@ public class ProductResource {
         }
         product.setName(updatedProduct.getName());
         product.setValue(updatedProduct.getValue());
-        return Response.noContent().build(); 
+        return Response.noContent().build();
     }
 
     @DELETE
@@ -74,6 +76,6 @@ public class ProductResource {
         if (!deleted) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.noContent().build(); 
+        return Response.noContent().build();
     }
 }

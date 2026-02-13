@@ -25,7 +25,6 @@ public class ProductRawMaterialResource {
     @Inject
     RawMaterialRepository rawMaterialRepository;
 
-    // Listar todas as relações
     @GET
     public List<ProductRawMaterialDTO> list() {
         return productRawMaterialRepository.listAll()

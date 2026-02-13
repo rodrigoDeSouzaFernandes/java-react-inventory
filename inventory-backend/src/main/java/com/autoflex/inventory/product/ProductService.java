@@ -13,10 +13,6 @@ public class ProductService {
     @Inject
     ProductRepository productRepository;
 
-    /**
-     * Retorna todos os produtos com a quantidade que pode ser produzida
-     * Se productibleOnly for true, retorna apenas produtos que podem ser produzidos (quantidade > 0)
-     */
     public List<ProductWithQuantityDTO> listProductsWithQuantity(boolean productibleOnly) {
         return productRepository.listAll().stream()
                 .map(product -> {
@@ -32,16 +28,13 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Calcula a quantidade máxima que pode ser produzida com base nas matérias-primas
-     */
+  
     public int calculateProducibleQuantity(Product product) {
         List<ProductRawMaterial> rawMaterials = product.getRawMaterials();
         if (rawMaterials == null || rawMaterials.isEmpty()) {
             return 0;
         }
 
-        // quantidade máxima que pode ser produzida = mínimo de (estoque / quantidade necessária)
         return rawMaterials.stream()
                 .mapToInt(prm -> prm.getRawMaterial().getStockQuantity() / prm.getRequiredQuantity())
                 .min()
