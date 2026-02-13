@@ -4,6 +4,8 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import java.net.URI;
 import java.util.List;
 
 @Path("/products")
@@ -21,32 +23,45 @@ public class ProductResource {
 
     @GET
     @Path("/{id}")
-    public Product findById(@PathParam("id") Long id) {
-        return productRepository.findById(id);
+    public Response findById(@PathParam("id") Long id) {
+        Product product = productRepository.findById(id);
+        if (product == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(product).build();
     }
 
     @POST
     @Transactional
-    public void create(Product product) {
+    public Response create(Product product) {
         productRepository.persist(product);
+        return Response
+                .created(URI.create("/products/" + product.getId()))
+                .entity(product)
+                .build();
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
-    public void update(@PathParam("id") Long id, Product updatedProduct) {
+    public Response update(@PathParam("id") Long id, Product updatedProduct) {
         Product product = productRepository.findById(id);
         if (product == null) {
-            throw new NotFoundException();
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
         product.setName(updatedProduct.getName());
         product.setValue(updatedProduct.getValue());
+        return Response.noContent().build(); 
     }
 
     @DELETE
     @Path("/{id}")
     @Transactional
-    public void delete(@PathParam("id") Long id) {
-        productRepository.deleteById(id);
+    public Response delete(@PathParam("id") Long id) {
+        boolean deleted = productRepository.deleteById(id);
+        if (!deleted) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.noContent().build(); 
     }
 }

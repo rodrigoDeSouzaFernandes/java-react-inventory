@@ -8,59 +8,41 @@ import com.autoflex.inventory.rawmaterial.RawMaterial;
 @Table(name = "product_raw_materials")
 public class ProductRawMaterial {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private ProductRawMaterialId id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
+    @MapsId("productId")
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "raw_material_id", nullable = false)
+    @MapsId("rawMaterialId")
+    @JoinColumn(name = "raw_material_id")
     private RawMaterial rawMaterial;
 
     @Column(nullable = false)
     private Integer requiredQuantity;
 
-    public ProductRawMaterial() {
-    }
+    public ProductRawMaterial() {}
 
     public ProductRawMaterial(Product product, RawMaterial rawMaterial, Integer requiredQuantity) {
         this.product = product;
         this.rawMaterial = rawMaterial;
         this.requiredQuantity = requiredQuantity;
+        this.id = new ProductRawMaterialId(product.getId(), rawMaterial.getId());
     }
 
-    public Long getId() {
-        return id;
-    }
+    // Getters e Setters
+    public ProductRawMaterialId getId() { return id; }
+    public void setId(ProductRawMaterialId id) { this.id = id; }
 
-    public Product getProduct() {
-        return product;
-    }
+    public Product getProduct() { return product; }
+    public void setProduct(Product product) { this.product = product; }
 
-    public RawMaterial getRawMaterial() {
-        return rawMaterial;
-    }
+    public RawMaterial getRawMaterial() { return rawMaterial; }
+    public void setRawMaterial(RawMaterial rawMaterial) { this.rawMaterial = rawMaterial; }
 
-    public Integer getRequiredQuantity() {
-        return requiredQuantity;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public void setRawMaterial(RawMaterial rawMaterial) {
-        this.rawMaterial = rawMaterial;
-    }
-
-    public void setRequiredQuantity(Integer requiredQuantity) {
-        this.requiredQuantity = requiredQuantity;
-    }
+    public Integer getRequiredQuantity() { return requiredQuantity; }
+    public void setRequiredQuantity(Integer requiredQuantity) { this.requiredQuantity = requiredQuantity; }
 }
