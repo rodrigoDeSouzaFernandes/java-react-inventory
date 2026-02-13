@@ -7,6 +7,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/raw-materials")
 @Produces(MediaType.APPLICATION_JSON)
@@ -17,18 +18,33 @@ public class RawMaterialResource {
     RawMaterialRepository rawMaterialRepository;
 
     @GET
-    public List<RawMaterial> list() {
-        return rawMaterialRepository.listAll();
+    public List<RawMaterialDTO> list() {
+        return rawMaterialRepository.listAll()
+                .stream().map(rm -> {
+                    RawMaterialDTO dto = new RawMaterialDTO();
+                    dto.id = rm.getId();
+                    dto.name = rm.getName();
+                    dto.stockQuantity = rm.getStockQuantity();
+                    return dto;
+                }).collect(Collectors.toList());
+
     }
 
     @GET
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
         RawMaterial rawMaterial = rawMaterialRepository.findById(id);
+
         if (rawMaterial == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(rawMaterial).build();
+
+        RawMaterialDTO dto = new RawMaterialDTO();
+        dto.id = rawMaterial.getId();
+        dto.name = rawMaterial.getName();
+        dto.stockQuantity = rawMaterial.getStockQuantity();
+
+        return Response.ok(dto).build();
     }
 
     @POST
