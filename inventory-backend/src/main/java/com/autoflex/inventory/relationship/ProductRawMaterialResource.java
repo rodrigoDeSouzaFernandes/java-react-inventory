@@ -40,7 +40,6 @@ public class ProductRawMaterialResource {
                 .collect(Collectors.toList());
     }
 
-    // Criar uma relação
     @POST
     @Transactional
     public Response create(ProductRawMaterialDTO dto) {
@@ -52,7 +51,6 @@ public class ProductRawMaterialResource {
                     .entity("Product or RawMaterial not found").build();
         }
 
-        // Verifica se a relação já existe
         var existing = productRawMaterialRepository.findByIds(dto.productId, dto.rawMaterialId);
         if (existing != null) {
             return Response.status(Response.Status.CONFLICT)
@@ -67,7 +65,6 @@ public class ProductRawMaterialResource {
                 .build();
     }
 
-    // Atualizar quantidade de uma relação existente
     @PUT
     @Path("/{productId}/{rawMaterialId}")
     @Transactional
@@ -84,7 +81,6 @@ public class ProductRawMaterialResource {
         return Response.noContent().build();
     }
 
-    // Deletar uma relação existente
     @DELETE
     @Path("/{productId}/{rawMaterialId}")
     @Transactional

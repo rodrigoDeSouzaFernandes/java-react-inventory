@@ -16,9 +16,13 @@ public class ProductResource {
     @Inject
     ProductRepository productRepository;
 
+    @Inject
+    ProductService productService;
+
     @GET
-    public List<Product> list() {
-        return productRepository.listAll();
+    public List<ProductWithQuantityDTO> list(@QueryParam("productibleOnly") @DefaultValue("false") boolean productibleOnly) {
+        // chama o service que já calcula a quantidade
+        return productService.listProductsWithQuantity(productibleOnly);
     }
 
     @GET
@@ -28,7 +32,15 @@ public class ProductResource {
         if (product == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(product).build();
+
+        int producibleQty = productService.calculateProducibleQuantity(product);
+        ProductWithQuantityDTO dto = new ProductWithQuantityDTO();
+        dto.id = product.getId();
+        dto.name = product.getName();
+        dto.value = product.getValue();
+        dto.producibleQuantity = producibleQty;
+
+        return Response.ok(dto).build();
     }
 
     @POST

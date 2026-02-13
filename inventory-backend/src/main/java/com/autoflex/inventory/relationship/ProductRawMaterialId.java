@@ -18,7 +18,6 @@ public class ProductRawMaterialId implements Serializable {
         this.rawMaterialId = rawMaterialId;
     }
 
-    // Getters e Setters
     public Long getProductId() {
         return productId;
     }
@@ -35,7 +34,6 @@ public class ProductRawMaterialId implements Serializable {
         this.rawMaterialId = rawMaterialId;
     }
 
-    // equals e hashCode
     @Override
     public boolean equals(Object o) {
         if (this == o)
