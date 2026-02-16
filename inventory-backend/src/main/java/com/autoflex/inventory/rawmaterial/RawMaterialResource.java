@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 import com.autoflex.inventory.rawmaterial.DTO.RawMaterialCreateDTO;
 import com.autoflex.inventory.rawmaterial.DTO.RawMaterialDTO;
+import com.autoflex.inventory.relationship.ProductRawMaterialRepository;
+import com.autoflex.inventory.shared.BusinessException;
 
 @Path("/raw-materials")
 @Produces(MediaType.APPLICATION_JSON)
@@ -20,6 +22,7 @@ public class RawMaterialResource {
 
     @Inject
     RawMaterialRepository rawMaterialRepository;
+    ProductRawMaterialRepository productRawMaterialRepository;
 
     @GET
     public List<RawMaterialDTO> list() {
@@ -86,6 +89,15 @@ public class RawMaterialResource {
         if (!deleted) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+
+        boolean hasRelation = productRawMaterialRepository.count("rawMaterial.id", id) > 0;
+
+        if (hasRelation) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new BusinessException("This material is related to a product"))
+                    .build();
+        }
+
         return Response.noContent().build();
     }
 }

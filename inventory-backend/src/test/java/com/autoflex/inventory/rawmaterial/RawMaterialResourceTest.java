@@ -12,17 +12,21 @@ import org.junit.jupiter.api.Test;
 
 import com.autoflex.inventory.rawmaterial.DTO.RawMaterialCreateDTO;
 import com.autoflex.inventory.rawmaterial.DTO.RawMaterialDTO;
+import com.autoflex.inventory.relationship.ProductRawMaterialRepository;
 
 public class RawMaterialResourceTest {
 
+    ProductRawMaterialRepository productRawMaterialRepository;
     RawMaterialRepository rawMaterialRepository;
     RawMaterialResource rawMaterialResource;
 
     @BeforeEach
     void setup() {
+        productRawMaterialRepository = mock(ProductRawMaterialRepository.class);
         rawMaterialRepository = mock(RawMaterialRepository.class);
         rawMaterialResource = new RawMaterialResource();
         rawMaterialResource.rawMaterialRepository = rawMaterialRepository;
+        rawMaterialResource.productRawMaterialRepository = productRawMaterialRepository;
     }
 
     @Test
