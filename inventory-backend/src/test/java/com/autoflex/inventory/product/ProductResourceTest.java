@@ -34,7 +34,7 @@ class ProductResourceTest {
         List<ProductWithQuantityDTO> mockList = new ArrayList<>();
         ProductWithQuantityDTO dto = new ProductWithQuantityDTO();
         dto.id = 1L;
-        dto.name = "Produto 1";
+        dto.name = "Product 1";
         dto.value = BigDecimal.valueOf(100.0);
         dto.producibleQuantity = 10;
         mockList.add(dto);
@@ -43,7 +43,7 @@ class ProductResourceTest {
 
         List<ProductWithQuantityDTO> result = productResource.list(false);
         assertEquals(1, result.size());
-        assertEquals("Produto 1", result.get(0).name);
+        assertEquals("Product 1", result.get(0).name);
         assertEquals(BigDecimal.valueOf(100.0), result.get(0).value);
     }
 
@@ -51,7 +51,7 @@ class ProductResourceTest {
     void testFindByIdFound() {
         Product product = new Product();
         product.setId(1L);
-        product.setName("Produto 1");
+        product.setName("Product 1");
         product.setValue(BigDecimal.valueOf(100.0));
 
         when(productRepository.findById(1L)).thenReturn(product);
@@ -61,7 +61,7 @@ class ProductResourceTest {
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
         ProductWithQuantityDTO dto = (ProductWithQuantityDTO) response.getEntity();
-        assertEquals("Produto 1", dto.name);
+        assertEquals("Product 1", dto.name);
         assertEquals(BigDecimal.valueOf(100.0), dto.value);
         assertEquals(10, dto.producibleQuantity);
     }
@@ -76,7 +76,7 @@ class ProductResourceTest {
     @Test
     void testCreate() {
         ProductCreateDTO dto = new ProductCreateDTO();
-        dto.name = "Novo Produto";
+        dto.name = "New Product";
         dto.value = BigDecimal.valueOf(150.0);
 
         doAnswer(invocation -> {
@@ -89,7 +89,7 @@ class ProductResourceTest {
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
 
         Product createdProduct = (Product) response.getEntity();
-        assertEquals("Novo Produto", createdProduct.getName());
+        assertEquals("New Product", createdProduct.getName());
         assertEquals(BigDecimal.valueOf(150.0), createdProduct.getValue());
         assertNotNull(createdProduct.getId());
     }
@@ -98,19 +98,19 @@ class ProductResourceTest {
     void testUpdateFound() {
         Product existing = new Product();
         existing.setId(1L);
-        existing.setName("Velho Nome");
+        existing.setName("Old name");
         existing.setValue(BigDecimal.valueOf(100.0));
 
         when(productRepository.findById(1L)).thenReturn(existing);
 
         Product updated = new Product();
-        updated.setName("Novo Nome");
+        updated.setName("New name");
         updated.setValue(BigDecimal.valueOf(200.0)); 
 
         Response response = productResource.update(1L, updated);
         assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
 
-        assertEquals("Novo Nome", existing.getName());
+        assertEquals("New name", existing.getName());
         assertEquals(BigDecimal.valueOf(200.0), existing.getValue());
     }
 
