@@ -10,6 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 import com.autoflex.inventory.product.DTO.ProductCreateDTO;
+import com.autoflex.inventory.product.DTO.ProductUpdateDTO;
 import com.autoflex.inventory.product.DTO.ProductWithQuantityDTO;
 
 @Path("/products")
@@ -73,7 +74,7 @@ public class ProductResource {
     @PATCH
     @Path("/{id}")
     @Transactional
-    public Response update(@PathParam("id") Long id, ProductCreateDTO dto) {
+    public Response update(@PathParam("id") Long id, ProductUpdateDTO dto) {
 
         Product product = productRepository.findById(id);
         if (product == null) {
