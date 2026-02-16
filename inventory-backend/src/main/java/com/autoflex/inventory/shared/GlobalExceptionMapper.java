@@ -15,7 +15,7 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
 
         if (exception instanceof WebApplicationException webEx) {
             errorResponse = new ErrorResponse(exception.getMessage());
-            return Response.status(webEx.getResponse().getStatus()) 
+            return Response.status(webEx.getResponse().getStatus())
                     .entity(errorResponse)
                     .type(MediaType.APPLICATION_JSON)
                     .build();
@@ -29,7 +29,7 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
                     .build();
         }
 
-        errorResponse = new ErrorResponse("Internal server error.");
+        errorResponse = new ErrorResponse("Internal server error");
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .entity(errorResponse)
                 .type(MediaType.APPLICATION_JSON)

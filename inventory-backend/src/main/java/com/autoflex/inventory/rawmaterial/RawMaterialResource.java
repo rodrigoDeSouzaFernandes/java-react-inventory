@@ -22,6 +22,7 @@ public class RawMaterialResource {
 
     @Inject
     RawMaterialRepository rawMaterialRepository;
+    @Inject
     ProductRawMaterialRepository productRawMaterialRepository;
 
     @GET
@@ -43,7 +44,7 @@ public class RawMaterialResource {
         RawMaterial rawMaterial = rawMaterialRepository.findById(id);
 
         if (rawMaterial == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            throw new NotFoundException("Material not found.");
         }
 
         RawMaterialDTO dto = new RawMaterialDTO();
@@ -74,7 +75,7 @@ public class RawMaterialResource {
     public Response update(@PathParam("id") Long id, RawMaterial updated) {
         RawMaterial rawMaterial = rawMaterialRepository.findById(id);
         if (rawMaterial == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            throw new NotFoundException("Material not found.");
         }
         rawMaterial.setName(updated.getName());
         rawMaterial.setStockQuantity(updated.getStockQuantity());
@@ -85,18 +86,20 @@ public class RawMaterialResource {
     @Path("/{id}")
     @Transactional
     public Response delete(@PathParam("id") Long id) {
-        boolean deleted = rawMaterialRepository.deleteById(id);
-        if (!deleted) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-        boolean hasRelation = productRawMaterialRepository.count("rawMaterial.id", id) > 0;
+        boolean hasRelation = productRawMaterialRepository
+                .count("rawMaterial.id", id) > 0;
 
         if (hasRelation) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(new BusinessException("This material is related to a product"))
-                    .build();
+            throw new BusinessException("This material is related to a product");
         }
+
+        boolean exists = rawMaterialRepository.findById(id) != null;
+
+        if (!exists) {
+            throw new NotFoundException("Material not found");
+        }
+
+        rawMaterialRepository.deleteById(id);
 
         return Response.noContent().build();
     }

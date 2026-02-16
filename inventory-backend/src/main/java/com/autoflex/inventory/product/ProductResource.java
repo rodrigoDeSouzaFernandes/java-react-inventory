@@ -35,7 +35,7 @@ public class ProductResource {
     public Response findById(@PathParam("id") Long id) {
         Product product = productRepository.findById(id);
         if (product == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            throw new NotFoundException("Product not found");
         }
 
         int producibleQty = productService.calculateProducibleQuantity(product);
@@ -70,7 +70,7 @@ public class ProductResource {
     public Response update(@PathParam("id") Long id, Product updatedProduct) {
         Product product = productRepository.findById(id);
         if (product == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            throw new NotFoundException("Product not found");
         }
         product.setName(updatedProduct.getName());
         product.setValue(updatedProduct.getValue());
@@ -81,10 +81,15 @@ public class ProductResource {
     @Path("/{id}")
     @Transactional
     public Response delete(@PathParam("id") Long id) {
-        boolean deleted = productRepository.deleteById(id);
-        if (!deleted) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+
+        boolean exists = productRepository.findById(id) != null;
+
+        if (!exists) {
+            throw new NotFoundException("Product not found");
         }
+
+        productRepository.deleteById(id);
+
         return Response.noContent().build();
     }
 }
