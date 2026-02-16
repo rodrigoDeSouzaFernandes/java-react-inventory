@@ -58,22 +58,35 @@ public class ProductResource {
 
         productRepository.persist(product);
 
+        ProductWithQuantityDTO responseDto = new ProductWithQuantityDTO();
+        responseDto.id = product.getId();
+        responseDto.name = product.getName();
+        responseDto.value = product.getValue();
+        responseDto.producibleQuantity = 0;
+
         return Response
                 .created(URI.create("/products/" + product.getId()))
-                .entity(product)
+                .entity(responseDto)
                 .build();
     }
 
-    @PUT
+    @PATCH
     @Path("/{id}")
     @Transactional
-    public Response update(@PathParam("id") Long id, Product updatedProduct) {
+    public Response update(@PathParam("id") Long id, ProductCreateDTO dto) {
+
         Product product = productRepository.findById(id);
         if (product == null) {
             throw new NotFoundException("Product not found");
         }
-        product.setName(updatedProduct.getName());
-        product.setValue(updatedProduct.getValue());
+
+        if (dto.name != null) {
+            product.setName(dto.name);
+        }
+        if (dto.value != null) {
+            product.setValue(dto.value);
+        }
+
         return Response.noContent().build();
     }
 
