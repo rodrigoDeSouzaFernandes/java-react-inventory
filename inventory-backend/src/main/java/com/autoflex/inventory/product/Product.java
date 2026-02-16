@@ -31,8 +31,6 @@ public class Product {
         this.value = value;
     }
 
-    // Getters e Setters
-
     public Long getId() {
         return id;
     }
