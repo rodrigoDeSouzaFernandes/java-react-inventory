@@ -14,8 +14,6 @@ import com.autoflex.inventory.product.DTO.ProductMaterialDTO;
 import com.autoflex.inventory.product.DTO.ProductUpdateDTO;
 import com.autoflex.inventory.product.DTO.ProductWithMaterialsDTO;
 import com.autoflex.inventory.product.DTO.ProductWithQuantityDTO;
-import com.autoflex.inventory.rawmaterial.DTO.RawMaterialDTO;
-import com.autoflex.inventory.relationship.ProductRawMaterial;
 
 @Path("/products")
 @Produces(MediaType.APPLICATION_JSON)
