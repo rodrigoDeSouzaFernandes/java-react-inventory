@@ -15,4 +15,6 @@ export const createProduct = async (
   return response.data;
 };
 
-// export const deleteProduct 
+export const deleteProduct = async (id: number): Promise<void> => {
+  await api.delete(`/products/${id}`);
+};

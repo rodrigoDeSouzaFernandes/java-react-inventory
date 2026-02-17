@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
-import { deleteProduct } from "../api/product.mutations";
+import { deleteMaterial } from "../api/material.mutations";
 
-export const useDeleteProduct = () => {
+export const useDeleteMaterial = () => {
   const queryClient = useQueryClient();
 
   return useMutation<void, AxiosError, number>({
-    mutationFn: deleteProduct,
+    mutationFn: deleteMaterial,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"], exact: false });
+      queryClient.invalidateQueries({ queryKey: ["raw-materials"], exact: false });
       //TODO: show snackbar
     },
     onError: () => {
