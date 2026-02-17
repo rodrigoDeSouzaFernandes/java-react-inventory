@@ -10,8 +10,12 @@ import java.net.URI;
 import java.util.List;
 
 import com.autoflex.inventory.product.DTO.ProductCreateDTO;
+import com.autoflex.inventory.product.DTO.ProductMaterialDTO;
 import com.autoflex.inventory.product.DTO.ProductUpdateDTO;
+import com.autoflex.inventory.product.DTO.ProductWithMaterialsDTO;
 import com.autoflex.inventory.product.DTO.ProductWithQuantityDTO;
+import com.autoflex.inventory.rawmaterial.DTO.RawMaterialDTO;
+import com.autoflex.inventory.relationship.ProductRawMaterial;
 
 @Path("/products")
 @Produces(MediaType.APPLICATION_JSON)
@@ -40,11 +44,21 @@ public class ProductResource {
         }
 
         int producibleQty = productService.calculateProducibleQuantity(product);
-        ProductWithQuantityDTO dto = new ProductWithQuantityDTO();
+        ProductWithMaterialsDTO dto = new ProductWithMaterialsDTO();
         dto.id = product.getId();
         dto.name = product.getName();
         dto.value = product.getValue();
         dto.producibleQuantity = producibleQty;
+        dto.materials = product.getRawMaterials().stream()
+                .map(prm -> {
+                    ProductMaterialDTO material = new ProductMaterialDTO();
+                    material.id = prm.getRawMaterial().getId();
+                    material.name = prm.getRawMaterial().getName();
+                    material.stockQuantity = prm.getRawMaterial().getStockQuantity();
+                    material.requiredQuantity = prm.getRequiredQuantity();
+                    return material;
+                })
+                .toList();
 
         return Response.ok(dto).build();
     }
