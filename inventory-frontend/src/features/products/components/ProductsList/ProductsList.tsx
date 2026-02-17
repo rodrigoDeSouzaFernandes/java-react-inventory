@@ -5,32 +5,23 @@ import {
   FormControlLabel,
   Switch,
 } from "@mui/material";
-import { DataGrid, type GridColDef } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import { useProductsFilter } from "../../hooks/useProductsFilter";
 import { useProductsList } from "../../hooks/useProductsList";
 
 import { Add } from "@mui/icons-material";
-import ProductForm from "../ProductForm";
-
-const columns: GridColDef[] = [
-  { field: "name", headerName: "Name", flex: 1 },
-  { field: "value", headerName: "Value", type: "number", flex: 1 },
-  {
-    field: "producibleQuantity",
-    headerName: "Producible Qty",
-    type: "number",
-    flex: 1,
-  },
-];
+import { productGridColumns } from "./grid/gridColumns";
 
 const ProductsList = () => {
+  const columns = productGridColumns({
+    onEdit: (e) => console.log(e),
+    onDelete: (e) => console.log(e),
+  });
+
   const { productibleOnly, handleToogleProductibleOnly } = useProductsFilter();
 
-  const {
-    data: products,
-    isLoading: isProductsListLoading,
-    isError,
-  } = useProductsList(productibleOnly);
+  const { data: products, isLoading: isProductsListLoading } =
+    useProductsList(productibleOnly);
 
   return (
     <Box component="main" sx={{ p: 3 }}>
