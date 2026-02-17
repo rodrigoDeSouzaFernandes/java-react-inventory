@@ -27,7 +27,7 @@ export const MobileMenu = () => {
     <>
       <Box
         sx={{
-          display: { xs: "flex", sm: "none" },
+          display: { xs: "flex", md: "none" },
           alignItems: "center",
           justifyContent: "space-between",
           bgcolor: "primary.main",

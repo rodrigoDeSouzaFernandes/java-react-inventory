@@ -26,7 +26,7 @@ export const Sidebar = ({ onLinkClick }: SidebarProps) => {
         width: 240,
         flexShrink: 0,
         height: "100vh",
-        display: { xs: "none", sm: "block" },
+        display: { xs: "none", md: "block" },
         bgcolor: theme.palette.primary.dark,
       }}
       aria-label="Main navigation"

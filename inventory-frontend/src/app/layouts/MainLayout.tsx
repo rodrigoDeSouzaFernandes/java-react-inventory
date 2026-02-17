@@ -11,7 +11,14 @@ const MainLayout = () => {
       <Box sx={{ flex: 1 }}>
         <MobileMenu />
 
-        <Box component="main" sx={{ p: 2 }}>
+        <Box
+          component="main"
+          sx={{
+            p: 2,
+
+            width: { xs: "100vw", md: "calc(100vw - 260px)" },
+          }}
+        >
           <Outlet />
         </Box>
       </Box>
