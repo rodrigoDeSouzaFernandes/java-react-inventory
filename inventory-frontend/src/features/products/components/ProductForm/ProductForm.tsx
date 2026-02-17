@@ -4,7 +4,6 @@ import {
   TextField,
   Button,
   CircularProgress,
-  Divider,
 } from "@mui/material";
 import { type ProductFormProps } from "./types";
 import { useProductForm } from "./hooks/useProductsForm";
@@ -22,8 +21,6 @@ const ProductForm = ({
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <Stack spacing={2}>
-        <Divider />
-
         <Controller
           name="name"
           control={form.control}

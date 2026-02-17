@@ -11,6 +11,8 @@ import { useProductsList } from "../../hooks/useProductsList";
 
 import { Add } from "@mui/icons-material";
 import { productGridColumns } from "./grid/gridColumns";
+import CreateProductDialog from "../CreateProductDialog";
+import { useState } from "react";
 
 const ProductsList = () => {
   const columns = productGridColumns({
@@ -22,6 +24,9 @@ const ProductsList = () => {
 
   const { data: products, isLoading: isProductsListLoading } =
     useProductsList(productibleOnly);
+
+  const [isCreateProductDialogOpen, setIsCreateProductDialogOpen] =
+    useState<boolean>(false);
 
   return (
     <Box component="main" sx={{ p: 3 }}>
@@ -50,7 +55,12 @@ const ProductsList = () => {
             }
             label="Producible only"
           />
-          <Button variant="contained" color="primary" startIcon={<Add />}>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<Add />}
+            onClick={() => setIsCreateProductDialogOpen(true)}
+          >
             Add new Product
           </Button>
         </Box>
@@ -69,6 +79,11 @@ const ProductsList = () => {
           autoHeight
         />
       </Box>
+
+      <CreateProductDialog
+        onClose={() => setIsCreateProductDialogOpen(false)}
+        open={isCreateProductDialogOpen}
+      />
     </Box>
   );
 };
