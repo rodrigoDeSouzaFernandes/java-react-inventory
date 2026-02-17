@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createProduct } from "../api/product.mutations";
 import type { AxiosError } from "axios";
+import type { Product, ProductCreateDTO } from "../types";
 
 export const useCreateProduct = () => {
   const queryClient = useQueryClient();
