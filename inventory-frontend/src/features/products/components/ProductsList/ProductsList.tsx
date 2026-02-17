@@ -7,12 +7,9 @@ import {
 } from "@mui/material";
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import { useProductsFilter } from "../../hooks/useProductsFilter";
+import { useProductsList } from "../../hooks/useProductsList";
 
-const mockProducts = [
-  { id: 1, name: "Product A", value: 100, producibleQuantity: 5 },
-  { id: 2, name: "Product B", value: 200, producibleQuantity: 0 },
-  { id: 3, name: "Product C", value: 150, producibleQuantity: 2 },
-];
+import { Add } from "@mui/icons-material";
 
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1 },
@@ -28,6 +25,12 @@ const columns: GridColDef[] = [
 const ProductsList = () => {
   const { productibleOnly, handleToogleProductibleOnly } = useProductsFilter();
 
+  const {
+    data: products,
+    isLoading: isProductsListLoading,
+    isError,
+  } = useProductsList(productibleOnly);
+
   return (
     <Box component="main" sx={{ p: 3 }}>
       <Box
@@ -40,7 +43,7 @@ const ProductsList = () => {
         }}
         aria-label="Products header"
       >
-        <Typography component="h1" variant="h4">
+        <Typography component="h1" variant="h4" sx={{ fontWeight: 600 }}>
           Products
         </Typography>
 
@@ -55,8 +58,8 @@ const ProductsList = () => {
             }
             label="Producible only"
           />
-          <Button variant="contained" color="primary">
-            Create new Product
+          <Button variant="contained" color="primary" startIcon={<Add />}>
+            Add new Product
           </Button>
         </Box>
       </Box>
@@ -66,7 +69,13 @@ const ProductsList = () => {
         aria-label="Products table"
         sx={{ height: 400, width: "100%" }}
       >
-        <DataGrid sx={{flex: 0}} rows={mockProducts} columns={columns} autoHeight />
+        <DataGrid
+          loading={isProductsListLoading}
+          sx={{ flex: 0 }}
+          rows={products}
+          columns={columns}
+          autoHeight
+        />
       </Box>
     </Box>
   );
