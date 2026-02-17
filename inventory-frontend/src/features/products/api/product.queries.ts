@@ -1,6 +1,6 @@
 import api from "@/lib/client/axios";
 
-export const listProducts = async (
+export const getProducts = async (
   productibleOnly: boolean = false,
 ): Promise<Product[]> => {
   const response = await api.get(
@@ -9,7 +9,7 @@ export const listProducts = async (
   return response.data;
 };
 
-export const findProductById = async (
+export const getProductById = async (
   id: number,
 ): Promise<Product> => {
   const response = await api.get(`/products/${id}`);

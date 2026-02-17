@@ -1,10 +1,11 @@
 import api from "@/lib/client/axios";
 
 export const updateProduct = async (
-  id: number,
   product: ProductUpdateDTO,
 ): Promise<void> => {
-  await api.patch(`/products/${id}`, product);
+  const { id, ...rest } = product;
+
+  await api.patch(`/products/${id}`, rest);
 };
 
 export const createProduct = async (
@@ -13,3 +14,5 @@ export const createProduct = async (
   const response = await api.post(`/products`, product);
   return response.data;
 };
+
+// export const deleteProduct 

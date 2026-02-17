@@ -10,4 +10,6 @@ interface ProductCreateDTO {
   value: number;
 }
 
-type ProductUpdateDTO = Partial<ProductCreateDTO>;
+type ProductUpdateDTO = Partial<ProductCreateDTO> & {
+  id: number
+}
