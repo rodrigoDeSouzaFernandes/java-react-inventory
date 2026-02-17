@@ -10,6 +10,7 @@ import { useProductsFilter } from "../../hooks/useProductsFilter";
 import { useProductsList } from "../../hooks/useProductsList";
 
 import { Add } from "@mui/icons-material";
+import ProductForm from "../ProductForm";
 
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1 },
