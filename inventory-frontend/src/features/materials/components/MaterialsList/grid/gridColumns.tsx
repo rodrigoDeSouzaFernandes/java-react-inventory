@@ -11,7 +11,13 @@ export const materialGridColumns = ({
   onEdit,
   onDelete,
 }: MaterialGridColumnsProps): GridColDef<Material>[] => [
-  { field: "name", headerName: "Name", flex: 4 },
+  {
+    field: "name",
+    headerName: "Name",
+    flex: 4,
+
+    minWidth: 150,
+  },
   {
     field: "stockQuantity",
     headerName: "Stock Quantity",

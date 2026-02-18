@@ -65,6 +65,7 @@ const ProductsList = () => {
           justifyContent: "space-between",
           alignItems: "center",
           mb: 2,
+          flexWrap: 'wrap'
         }}
         aria-label="Products header"
       >
@@ -72,7 +73,7 @@ const ProductsList = () => {
           Products
         </Typography>
 
-        <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+        <Box sx={{ display: "flex", gap: 2, alignItems: "center", flexWrap: 'wrap' }}>
           <FormControlLabel
             control={
               <Switch
@@ -97,7 +98,11 @@ const ProductsList = () => {
       <Box
         component="section"
         aria-label="Products table"
-        sx={{ height: 400, width: "100%" }}
+        sx={{
+          height: { xs: "calc(100vh - 80px)", sm: "calc(100vh - 150px)" },
+          width: "100%",
+          flex: "1",
+        }}
       >
         <DataGrid
           loading={isProductsListLoading}
@@ -114,7 +119,6 @@ const ProductsList = () => {
           }}
           rows={productsRows}
           columns={columns}
-          autoHeight
           onRowClick={(params) => {
             navigate(`/products/${params.id}`);
           }}

@@ -1,5 +1,9 @@
 import api from "@/lib/client/axios";
-import type { ProductMaterial, ProductMaterialUpdateDTO } from "../types";
+import type {
+  ProductMaterial,
+  ProductMaterialDeleteDTO,
+  ProductMaterialUpdateDTO,
+} from "../types";
 
 export const addMaterialToProduct = async (
   dto: ProductMaterial,
@@ -18,5 +22,13 @@ export const updateProductMaterialQuantity = async (
   await api.put(
     `product-raw-materials/${dto.productId}/${dto.rawMaterialId}`,
     body,
+  );
+};
+
+export const removeMaterialFromProduct = async (
+  dto: ProductMaterialDeleteDTO,
+): Promise<void> => {
+  await api.delete(
+    `product-raw-materials/${dto.productId}/${dto.rawMaterialId}`,
   );
 };

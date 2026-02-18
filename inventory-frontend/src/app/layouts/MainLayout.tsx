@@ -5,21 +5,21 @@ import { MobileMenu } from "@/shared/navigation/MobileMenu";
 
 const MainLayout = () => {
   return (
-    <Box sx={{ display: "flex", height: "100vh" }}>
+    <Box sx={{ display: "flex" }}>
       <Sidebar />
-
-      <Box sx={{ flex: 1 }}>
+      <Box
+        sx={{ p: 0, overflow: { xs: "auto", sm: "inherit" }, width: "100%" }}
+      >
         <MobileMenu />
-
         <Box
-          component="main"
           sx={{
-            p: 2,
+            p: { xs: 0, sm: 2 },
 
-            width: { xs: "100vw", md: "calc(100vw - 240px)" },
+            width: { xs: "100%", md: "calc(100vw - 240px)" },
+            maxWidth: "100vw",
             margin: "auto",
-            height: "100vh",
-            overflow: "auto",
+            height: { xs: "auto", md: "100vh" },
+            overflow: { sm: "auto" },
             m: 0,
 
             "& > *": {

@@ -60,7 +60,7 @@ const EditProductRawMaterialDialog = ({
           alignItems: "center",
         }}
       >
-        Add Raw Material
+        Update Raw Material
         <IconButton onClick={onClose} aria-label="Close dialog" size="small">
           <GridCloseIcon />
         </IconButton>

@@ -41,3 +41,5 @@ export type ProductMaterialUpdateDTO = Pick<
   ProductMaterial,
   "requiredQuantity"
 >;
+
+export type ProductMaterialDeleteDTO =Omit<ProductMaterial, "requiredQuantity">

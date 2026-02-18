@@ -11,7 +11,7 @@ export const productGridColumns = ({
   onEdit,
   onDelete,
 }: ProductGridColumnsProps): GridColDef<ProductRow>[] => [
-  { field: "name", headerName: "Name", flex: 4 },
+  { field: "name", headerName: "Name", flex: 4, minWidth: 150 },
   {
     field: "value",
     headerName: "Value",

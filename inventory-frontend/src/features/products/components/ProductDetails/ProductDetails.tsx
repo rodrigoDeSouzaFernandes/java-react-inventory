@@ -17,6 +17,7 @@ import AddProductRawMaterialDialog from "../AddProductRawMaterialDialog/AddProdu
 import { useState } from "react";
 import EditProductRawMaterialDialog from "../EditProductRawMaterialDialog/EditProductRawMaterialDialog";
 import type { MaterialRow } from "./types";
+import RemoveMaterialFromProductDialog from "../RemoveMaterialFromProductDialog";
 
 interface ProductDetailsProps {
   productId: number;
@@ -37,6 +38,14 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
       material: null,
     });
 
+  const [removeMaterialDialogProps, setRemoveMaterialDialogProps] = useState<{
+    open: boolean;
+    material: MaterialRow | null;
+  }>({
+    open: false,
+    material: null,
+  });
+
   const closeAddMaterialDialog = () => setAddMaterialDialogOpen(false);
   const openAddMaterialDialog = () => setAddMaterialDialogOpen(true);
 
@@ -45,6 +54,13 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
 
   const openEditMaterialQuantityDialog = (material: MaterialRow) => {
     setEditMaterialQuantityDialogProps({ open: true, material });
+  };
+
+  const closeRemoveMaterialDialog = () =>
+    setRemoveMaterialDialogProps({ open: false, material: null });
+
+  const openRemoveMaterialDialog = (material: MaterialRow) => {
+    setRemoveMaterialDialogProps({ open: true, material });
   };
 
   if (isLoading) {
@@ -64,7 +80,7 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
 
   const columns = productDetailsGridColumns({
     onEdit: openEditMaterialQuantityDialog,
-    onDelete: (material) => console.log("Delete material", material),
+    onDelete: openRemoveMaterialDialog,
   });
 
   return (
@@ -75,6 +91,7 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
             component="h1"
             variant="h4"
             sx={{ fontWeight: 600, mb: 2 }}
+            fontSize={{ xs: 32, sm: 40 }}
           >
             {product?.name}
           </Typography>
@@ -128,10 +145,11 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
           alignItems: "center",
           mb: 2,
           flexWrap: "wrap",
+          gap: 2,
         }}
         aria-label="Product details header"
       >
-        <Typography component="h2" variant="h4">
+        <Typography component="h2" variant="h4" fontSize={{ xs: 24, sm: 32 }}>
           Product raw materials
         </Typography>
         <Button
@@ -149,15 +167,16 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
         component="section"
         aria-label="Materials table"
         sx={{
-          height: 400,
+          height: { xs: "100%", sm: "calc(100vh - 380px)" },
+          maxheight: { xs: "calc(100vh - 80px)", sm: "calc(100vh - 380px)" },
           width: "100%",
+          flex: "1",
         }}
       >
         <DataGrid
           loading={isLoading}
           rows={product?.materials || []}
           columns={columns}
-          autoHeight
           getRowId={(row) => row.id}
         />
       </Box>
@@ -170,6 +189,12 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
       <EditProductRawMaterialDialog
         {...editMaterialQuantityDialogProps}
         onClose={closeEditMaterialQuantityDialog}
+        product={product}
+      />
+
+      <RemoveMaterialFromProductDialog
+        {...removeMaterialDialogProps}
+        onClose={closeRemoveMaterialDialog}
         product={product}
       />
     </Box>
