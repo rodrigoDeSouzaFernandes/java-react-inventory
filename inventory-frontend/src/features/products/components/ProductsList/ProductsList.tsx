@@ -12,33 +12,32 @@ import { useProductsList } from "../../hooks/useProductsList";
 import { Add } from "@mui/icons-material";
 import { productGridColumns } from "./grid/gridColumns";
 import CreateProductDialog from "../CreateProductDialog";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { formatCurrency } from "@/utils/currency";
 import type { ProductRow } from "../../types";
-import type { DeleteProductDialogProps } from "../DeleteProductDialog/DeleteProductDialog";
 import DeleteProductDialog from "../DeleteProductDialog/DeleteProductDialog";
+import EditProductDialog from "../EditProductDialog";
+import { useProductListDialogs } from "./hooks/useProductListDialogs";
 
 const ProductsList = () => {
   const { productibleOnly, handleToogleProductibleOnly } = useProductsFilter();
 
-  const [isCreateProductDialogOpen, setIsCreateProductDialogOpen] =
-    useState<boolean>(false);
-
-  const [deleteProductDialogProps, setDeleteProductDialogProps] = useState<
-    Omit<DeleteProductDialogProps, "onClose">
-  >({ open: false, product: null });
-
-  const openDeleteDialog = (productRow: ProductRow) =>
-    setDeleteProductDialogProps({ open: true, product: productRow });
-
-  const closeDeleteDialog = () =>
-    setDeleteProductDialogProps({ open: false, product: null });
-
   const { data: products, isLoading: isProductsListLoading } =
     useProductsList(productibleOnly);
 
+  const {
+    isCreateProductDialogOpen,
+    setIsCreateProductDialogOpen,
+    deleteProductDialogProps,
+    editProductDialogProps,
+    closeDeleteDialog,
+    openDeleteDialog,
+    closeEditDialog,
+    openEditDialog,
+  } = useProductListDialogs();
+
   const columns = productGridColumns({
-    onEdit: (e) => console.log(e),
+    onEdit: openEditDialog,
     onDelete: openDeleteDialog,
   });
 
@@ -109,7 +108,14 @@ const ProductsList = () => {
         onClose={() => setIsCreateProductDialogOpen(false)}
         open={isCreateProductDialogOpen}
       />
-      <DeleteProductDialog {...deleteProductDialogProps} onClose={closeDeleteDialog} />
+      <DeleteProductDialog
+        {...deleteProductDialogProps}
+        onClose={closeDeleteDialog}
+      />
+      <EditProductDialog
+        {...editProductDialogProps}
+        onClose={closeEditDialog}
+      />
     </Box>
   );
 };

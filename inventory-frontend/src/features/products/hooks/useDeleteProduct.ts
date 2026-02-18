@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { deleteProduct } from "../api/product.mutations";
+import { enqueueSnackbar } from "notistack";
 
 export const useDeleteProduct = () => {
   const queryClient = useQueryClient();
@@ -9,10 +10,14 @@ export const useDeleteProduct = () => {
     mutationFn: deleteProduct,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"], exact: false });
-      //TODO: show snackbar
+      enqueueSnackbar("Product deleted successfully!", { variant: "success" });
     },
-    onError: () => {
-      //TODO: show snackbar
+    onError: (error) => {
+      const message =
+        (error.response?.data as { message?: string })?.message ||
+        "Failed to delete product";
+
+      enqueueSnackbar(message, { variant: "error" });
     },
   });
 };

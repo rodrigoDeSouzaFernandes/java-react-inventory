@@ -14,7 +14,7 @@ const ProductForm = ({
   onSubmit,
   onCancel,
   isLoading,
-  submitLabel = "Salvar Produto",
+  submitLabel = "Save",
 }: ProductFormProps) => {
   const { form } = useProductForm({ defaultValues });
 
