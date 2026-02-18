@@ -19,7 +19,7 @@ export const useUpdateProductMaterialQuantity = () => {
       });
     },
     onError: (error) => {
-      let message =
+      const message =
         (error.response?.data as { message?: string })?.message ||
         "Failed to update required quantity. Please try again.";
 
