@@ -1,6 +1,7 @@
 package com.autoflex.inventory.relationship;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
@@ -13,6 +14,8 @@ import com.autoflex.inventory.product.Product;
 import com.autoflex.inventory.product.ProductRepository;
 import com.autoflex.inventory.rawmaterial.RawMaterial;
 import com.autoflex.inventory.rawmaterial.RawMaterialRepository;
+import com.autoflex.inventory.relationship.DTO.ProductRawMaterialDTO;
+import com.autoflex.inventory.relationship.DTO.ProductRawMaterialUpdateDTO;
 
 class ProductRawMaterialResourceTest {
 
@@ -130,7 +133,7 @@ class ProductRawMaterialResourceTest {
                 when(productRawMaterialRepository.findByIds(1L, 2L))
                                 .thenReturn(prm);
 
-                ProductRawMaterialDTO dto = new ProductRawMaterialDTO();
+                ProductRawMaterialUpdateDTO dto = new ProductRawMaterialUpdateDTO();
                 dto.requiredQuantity = 20;
 
                 Response response = resource.update(1L, 2L, dto);
@@ -144,7 +147,7 @@ class ProductRawMaterialResourceTest {
                 when(productRawMaterialRepository.findByIds(1L, 2L))
                                 .thenReturn(null);
 
-                ProductRawMaterialDTO dto = new ProductRawMaterialDTO();
+                ProductRawMaterialUpdateDTO dto = new ProductRawMaterialUpdateDTO();
 
                 Response response = resource.update(1L, 2L, dto);
 

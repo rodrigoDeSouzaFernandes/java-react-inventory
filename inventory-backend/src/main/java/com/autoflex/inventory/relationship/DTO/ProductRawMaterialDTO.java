@@ -1,4 +1,4 @@
-package com.autoflex.inventory.relationship;
+package com.autoflex.inventory.relationship.DTO;
 
 public class ProductRawMaterialDTO {
     public Long productId;

@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 import com.autoflex.inventory.product.ProductRepository;
 import com.autoflex.inventory.rawmaterial.RawMaterialRepository;
+import com.autoflex.inventory.relationship.DTO.ProductRawMaterialDTO;
+import com.autoflex.inventory.relationship.DTO.ProductRawMaterialUpdateDTO;
 
 @Path("/product-raw-materials")
 @Produces(MediaType.APPLICATION_JSON)
@@ -68,8 +70,8 @@ public class ProductRawMaterialResource {
     @Path("/{productId}/{rawMaterialId}")
     @Transactional
     public Response update(@PathParam("productId") Long productId,
-                           @PathParam("rawMaterialId") Long rawMaterialId,
-                           ProductRawMaterialDTO dto) {
+            @PathParam("rawMaterialId") Long rawMaterialId,
+            ProductRawMaterialUpdateDTO dto) {
         var prm = productRawMaterialRepository.findByIds(productId, rawMaterialId);
         if (prm == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -84,7 +86,7 @@ public class ProductRawMaterialResource {
     @Path("/{productId}/{rawMaterialId}")
     @Transactional
     public Response delete(@PathParam("productId") Long productId,
-                           @PathParam("rawMaterialId") Long rawMaterialId) {
+            @PathParam("rawMaterialId") Long rawMaterialId) {
         var deleted = productRawMaterialRepository.deleteByIds(productId, rawMaterialId);
         if (!deleted) {
             return Response.status(Response.Status.NOT_FOUND).build();
