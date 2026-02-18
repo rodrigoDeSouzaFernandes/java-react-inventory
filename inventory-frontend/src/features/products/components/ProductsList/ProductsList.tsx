@@ -12,7 +12,9 @@ import { useProductsList } from "../../hooks/useProductsList";
 import { Add } from "@mui/icons-material";
 import { productGridColumns } from "./grid/gridColumns";
 import CreateProductDialog from "../CreateProductDialog";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { formatCurrency } from "@/utils/currency";
+import type { ProductRow } from "../../types";
 
 const ProductsList = () => {
   const columns = productGridColumns({
@@ -27,6 +29,17 @@ const ProductsList = () => {
 
   const [isCreateProductDialogOpen, setIsCreateProductDialogOpen] =
     useState<boolean>(false);
+
+  const productsRows: ProductRow[] = useMemo(
+    () =>
+      products
+        ? products.map((product) => ({
+            ...product,
+            value: formatCurrency(product.value),
+          }))
+        : [],
+    [products],
+  );
 
   return (
     <Box component="main" sx={{ p: 3 }}>
@@ -74,7 +87,7 @@ const ProductsList = () => {
         <DataGrid
           loading={isProductsListLoading}
           sx={{ flex: 0 }}
-          rows={products}
+          rows={productsRows}
           columns={columns}
           autoHeight
         />

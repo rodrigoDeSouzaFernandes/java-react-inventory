@@ -29,6 +29,7 @@ export const CustomSnackbarProvider = ({
       maxSnack={3}
       preventDuplicate
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      autoHideDuration={4000}
     >
       {children}
     </SnackbarProvider>

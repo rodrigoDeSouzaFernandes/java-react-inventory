@@ -17,6 +17,8 @@ const MainLayout = () => {
             p: 2,
 
             width: { xs: "100vw", md: "calc(100vw - 260px)" },
+            maxWidth: 1400,
+            margin: "auto",
           }}
         >
           <Outlet />

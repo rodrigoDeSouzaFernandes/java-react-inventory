@@ -11,5 +11,9 @@ export interface ProductCreateDTO {
 }
 
 export type ProductUpdateDTO = Partial<ProductCreateDTO> & {
-  id: number
-}
+  id: number;
+};
+
+export type ProductRow = Omit<Product, "value"> & {
+  value: string;
+};
