@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import com.autoflex.inventory.rawmaterial.DTO.RawMaterialCreateDTO;
 import com.autoflex.inventory.rawmaterial.DTO.RawMaterialDTO;
+import com.autoflex.inventory.rawmaterial.DTO.RawMaterialUpdateDTO;
 import com.autoflex.inventory.relationship.ProductRawMaterialRepository;
 import com.autoflex.inventory.shared.BusinessException;
 
@@ -69,16 +70,21 @@ public class RawMaterialResource {
                 .build();
     }
 
-    @PUT
+    @PATCH
     @Path("/{id}")
     @Transactional
-    public Response update(@PathParam("id") Long id, RawMaterial updated) {
+    public Response update(@PathParam("id") Long id, RawMaterialUpdateDTO dto) {
         RawMaterial rawMaterial = rawMaterialRepository.findById(id);
         if (rawMaterial == null) {
             throw new NotFoundException("Material not found.");
         }
-        rawMaterial.setName(updated.getName());
-        rawMaterial.setStockQuantity(updated.getStockQuantity());
+
+        if (dto.name != null) {
+            rawMaterial.setName(dto.name);
+        }
+        if (dto.stockQuantity != null) {
+            rawMaterial.setStockQuantity(dto.stockQuantity);
+        }
         return Response.noContent().build();
     }
 

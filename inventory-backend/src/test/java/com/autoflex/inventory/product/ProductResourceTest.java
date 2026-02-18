@@ -15,6 +15,7 @@ import java.util.List;
 
 import com.autoflex.inventory.product.DTO.ProductCreateDTO;
 import com.autoflex.inventory.product.DTO.ProductUpdateDTO;
+import com.autoflex.inventory.product.DTO.ProductWithMaterialsDTO;
 import com.autoflex.inventory.product.DTO.ProductWithQuantityDTO;
 
 class ProductResourceTest {
@@ -56,6 +57,7 @@ class ProductResourceTest {
         product.setId(1L);
         product.setName("Product 1");
         product.setValue(BigDecimal.valueOf(100.0));
+        product.setRawMaterials(new ArrayList<>());
 
         when(productRepository.findById(1L)).thenReturn(product);
         when(productService.calculateProducibleQuantity(product)).thenReturn(10);
@@ -63,7 +65,7 @@ class ProductResourceTest {
         Response response = productResource.findById(1L);
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
-        ProductWithQuantityDTO dto = (ProductWithQuantityDTO) response.getEntity();
+        ProductWithMaterialsDTO dto = (ProductWithMaterialsDTO) response.getEntity();
         assertEquals("Product 1", dto.name);
         assertEquals(BigDecimal.valueOf(100.0), dto.value);
         assertEquals(10, dto.producibleQuantity);
