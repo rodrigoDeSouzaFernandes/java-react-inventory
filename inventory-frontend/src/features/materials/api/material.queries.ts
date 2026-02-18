@@ -1,4 +1,5 @@
 import api from "@/lib/client/axios";
+import type { Material } from "../types";
 
 export const getMaterials = async (): Promise<Material[]> => {
   const response = await api.get(`/raw-materials`);

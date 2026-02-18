@@ -1,4 +1,5 @@
 import api from "@/lib/client/axios";
+import type { Material, MaterialCreateDTO, MaterialUpdateDTO } from "../types";
 
 export const updateMaterial = async (
   material: MaterialUpdateDTO,

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateMaterial } from "../api/material.mutations";
 import type { AxiosError } from "axios";
+import type { MaterialUpdateDTO } from "../types";
 
 export const useUpdateMaterial = () => {
   const queryClient = useQueryClient();

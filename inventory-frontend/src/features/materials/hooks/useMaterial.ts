@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getMaterialById } from "../api/material.queries";
 import type { AxiosError } from "axios";
+import type { Material } from "../types";
 
 export const useMaterial = (id: number) => {
   return useQuery<Material, AxiosError>({
