@@ -17,7 +17,7 @@ import LoadingSkeleton from "./LoadingSkeleton";
 interface AddProductRawMaterialDialogProps {
   open: boolean;
   onClose: () => void;
-  product: ProductWithMaterials;
+  product: ProductWithMaterials | null;
 }
 
 const AddProductRawMaterialDialog = ({
@@ -35,7 +35,7 @@ const AddProductRawMaterialDialog = ({
     () =>
       rawMaterials
         ? rawMaterials?.filter((newMaterial) =>
-            product.materials.every(
+            product?.materials.every(
               (currentMaterial) => currentMaterial.id !== newMaterial.id,
             ),
           )

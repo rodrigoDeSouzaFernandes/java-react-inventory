@@ -5,6 +5,8 @@ import {
   Card,
   CardContent,
   Grid,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useProduct } from "../../hooks/useProduct";
@@ -12,21 +14,35 @@ import { Add } from "@mui/icons-material";
 import { productDetailsGridColumns } from "./grid/gridColumns";
 import { formatCurrency } from "@/utils/currency";
 import AddProductRawMaterialDialog from "../AddProductRawMaterialDialog/AddProductRawMaterialDialog";
+import { useState } from "react";
 
 interface ProductDetailsProps {
   productId: number;
 }
 
 const ProductDetails = ({ productId }: ProductDetailsProps) => {
-  const { data: product, isLoading } = useProduct(productId);
+  const { data: product, isLoading, isError } = useProduct(productId);
 
-  if (isLoading || !product) {
+  const [addMaterialDialogOpen, setAddMaterialDialogOpen] =
+    useState<boolean>(false);
+
+  const closeAddMaterialDialog = () => setAddMaterialDialogOpen(false);
+  const openAddMaterialDialog = () => setAddMaterialDialogOpen(true);
+
+  if (isLoading) {
     return <Typography>Loading...</Typography>;
   }
 
-  const handleAddMaterial = () => {
-    console.log("Add material");
-  };
+  if (isError || !product) {
+    return (
+      <Alert severity="error">
+        <AlertTitle>Error</AlertTitle>
+        <Typography>
+          Something went wrong while loading the product data. Please try again.
+        </Typography>
+      </Alert>
+    );
+  }
 
   const columns = productDetailsGridColumns({
     onEdit: (material) => console.log("Edit material", material),
@@ -42,7 +58,7 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
             variant="h4"
             sx={{ fontWeight: 600, mb: 2 }}
           >
-            {product.name}
+            {product?.name}
           </Typography>
           <Grid
             container
@@ -62,7 +78,7 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
                 Value
               </Typography>
               <Typography variant="h6">
-                {formatCurrency(product.value)}
+                {formatCurrency(product?.value || 0)}
               </Typography>
             </Grid>
 
@@ -78,7 +94,9 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
               <Typography variant="subtitle2" color="text.secondary">
                 Producible Quantity
               </Typography>
-              <Typography variant="h6">{product.producibleQuantity}</Typography>
+              <Typography variant="h6">
+                {product?.producibleQuantity}
+              </Typography>
             </Grid>
           </Grid>
         </CardContent>
@@ -102,7 +120,7 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
           variant="contained"
           color="primary"
           startIcon={<Add />}
-          onClick={handleAddMaterial}
+          onClick={openAddMaterialDialog}
           sx={{ ml: "auto", mb: 2 }}
         >
           Add Material
@@ -119,16 +137,17 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
       >
         <DataGrid
           loading={isLoading}
-          rows={product.materials}
+          rows={product?.materials || []}
           columns={columns}
           autoHeight
           getRowId={(row) => row.id}
         />
       </Box>
+
       <AddProductRawMaterialDialog
-        open={true}
+        open={addMaterialDialogOpen}
+        onClose={closeAddMaterialDialog}
         product={product}
-        onClose={() => {}}
       />
     </Box>
   );
