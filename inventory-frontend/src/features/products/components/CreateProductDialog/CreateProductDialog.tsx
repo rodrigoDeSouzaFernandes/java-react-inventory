@@ -10,17 +10,19 @@ interface CreateProductDialogProps {
   onClose: () => void;
 }
 
-const CreateProductDialog = ({
-  open,
-  onClose,
-}: CreateProductDialogProps) => {
+const CreateProductDialog = ({ open, onClose }: CreateProductDialogProps) => {
   const { mutate: createProduct, isPending } = useCreateProduct();
 
   const create = (formData: ProductFormData) => {
-    createProduct({
-      name: formData.name,
-      value: parseCurrencyToNumber(formData.price),
-    });
+    createProduct(
+      {
+        name: formData.name,
+        value: parseCurrencyToNumber(formData.price),
+      },
+      {
+        onSuccess: onClose,
+      },
+    );
   };
 
   return (

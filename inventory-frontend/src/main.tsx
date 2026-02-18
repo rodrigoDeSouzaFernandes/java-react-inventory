@@ -9,13 +9,16 @@ import { queryClient } from "@/lib/react-query";
 import "./index.css";
 import App from "@/App";
 import { ThemeProvider } from "./app/providers/ThemeProvider";
+import { CustomSnackbarProvider } from "./app/providers/SnackbarProvider";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        <App />
-        <CssBaseline />
+        <CustomSnackbarProvider>
+          <App />
+          <CssBaseline />
+        </CustomSnackbarProvider>
       </QueryClientProvider>
     </ThemeProvider>
   </StrictMode>,
