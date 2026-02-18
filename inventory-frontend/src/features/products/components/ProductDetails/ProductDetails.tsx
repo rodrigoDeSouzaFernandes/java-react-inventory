@@ -11,6 +11,7 @@ import { useProduct } from "../../hooks/useProduct";
 import { Add } from "@mui/icons-material";
 import { productDetailsGridColumns } from "./grid/gridColumns";
 import { formatCurrency } from "@/utils/currency";
+import AddProductRawMaterialDialog from "../AddProductRawMaterialDialog/AddProductRawMaterialDialog";
 
 interface ProductDetailsProps {
   productId: number;
@@ -124,6 +125,11 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
           getRowId={(row) => row.id}
         />
       </Box>
+      <AddProductRawMaterialDialog
+        open={true}
+        product={product}
+        onClose={() => {}}
+      />
     </Box>
   );
 };
