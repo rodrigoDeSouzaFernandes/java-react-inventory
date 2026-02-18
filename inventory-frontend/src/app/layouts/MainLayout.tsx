@@ -5,7 +5,7 @@ import { MobileMenu } from "@/shared/navigation/MobileMenu";
 
 const MainLayout = () => {
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh" }}>
+    <Box sx={{ display: "flex", height: "100vh" }}>
       <Sidebar />
 
       <Box sx={{ flex: 1 }}>
@@ -16,9 +16,16 @@ const MainLayout = () => {
           sx={{
             p: 2,
 
-            width: { xs: "100vw", md: "calc(100vw - 260px)" },
-            maxWidth: 1400,
+            width: { xs: "100vw", md: "calc(100vw - 240px)" },
             margin: "auto",
+            height: "100vh",
+            overflow: "auto",
+            m: 0,
+
+            "& > *": {
+              maxWidth: 1400,
+              margin: "auto",
+            },
           }}
         >
           <Outlet />

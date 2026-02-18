@@ -17,3 +17,16 @@ export type ProductUpdateDTO = Partial<ProductCreateDTO> & {
 export type ProductRow = Omit<Product, "value"> & {
   value: string;
 };
+
+export interface ProductWithMaterials {
+  id: number;
+  name: string;
+  value: number;
+  producibleQuantity: number;
+  materials: {
+    id: number;
+    name: string;
+    stockQuantity: number;
+    requiredQuantity: number;
+  }[];
+}

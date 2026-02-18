@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import ProductsPage from "./app/pages/ProductsPage";
 import MaterialsPage from "./app/pages/MaterialsPage";
+import ProductDetailsPage from "./app/pages/ProductDetailsPage";
 import MainLayout from "./app/layouts/MainLayout";
 
 export const router = createBrowserRouter([
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
       {
         path: "/products",
         Component: ProductsPage,
+      },
+      {
+        path: "/products/:id",
+        Component: ProductDetailsPage,
       },
       {
         path: "/raw-materials",

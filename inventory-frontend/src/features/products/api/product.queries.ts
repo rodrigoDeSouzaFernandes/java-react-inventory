@@ -1,4 +1,5 @@
 import api from "@/lib/client/axios";
+import type { Product, ProductDetails } from "../types";
 
 export const getProducts = async (
   productibleOnly: boolean = false,
@@ -11,7 +12,7 @@ export const getProducts = async (
 
 export const getProductById = async (
   id: number,
-): Promise<Product> => {
+): Promise<ProductDetails> => {
   const response = await api.get(`/products/${id}`);
   return response.data;
 };
