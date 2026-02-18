@@ -7,7 +7,7 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import { productMaterialSchema } from "../AddProductRawMaterialDialog/schemas/productMaterialSchema";
+import { productMaterialSchema } from "./schemas/productMaterialSchema";
 import type {
   ProductMaterialFormData,
   ProductMaterialFormProps,
