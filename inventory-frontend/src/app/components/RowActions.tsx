@@ -14,7 +14,8 @@ function RowActions<T>({ row, onEdit, onDelete }: RowActionsProps<T>) {
 
   const open = Boolean(anchorEl);
 
-  const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpen = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation()
     setAnchorEl(event.currentTarget);
   };
 
@@ -22,12 +23,14 @@ function RowActions<T>({ row, onEdit, onDelete }: RowActionsProps<T>) {
     setAnchorEl(null);
   };
 
-  const handleEdit = () => {
+  const handleEdit = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    e.stopPropagation();
     handleClose();
     onEdit(row);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    e.stopPropagation();
     handleClose();
     onDelete(row);
   };

@@ -18,8 +18,12 @@ import type { ProductRow } from "../../types";
 import DeleteProductDialog from "../DeleteProductDialog/DeleteProductDialog";
 import EditProductDialog from "../EditProductDialog";
 import { useProductListDialogs } from "./hooks/useProductListDialogs";
+import { useNavigate } from "react-router";
+import { blue } from "@mui/material/colors";
 
 const ProductsList = () => {
+  const navigate = useNavigate();
+
   const { productibleOnly, handleToogleProductibleOnly } = useProductsFilter();
 
   const { data: products, isLoading: isProductsListLoading } =
@@ -97,10 +101,23 @@ const ProductsList = () => {
       >
         <DataGrid
           loading={isProductsListLoading}
-          sx={{ flex: 0 }}
+          sx={{
+            flex: 0,
+
+            "& .MuiDataGrid-row": {
+              cursor: "pointer",
+            },
+            "& .MuiDataGrid-row:hover [data-field='name'] ": {
+              textDecoration: "underline",
+              color: blue[700],
+            },
+          }}
           rows={productsRows}
           columns={columns}
           autoHeight
+          onRowClick={(params) => {
+            navigate(`/products/${params.id}`);
+          }}
         />
       </Box>
 
