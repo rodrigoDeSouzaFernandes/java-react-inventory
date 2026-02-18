@@ -1,12 +1,7 @@
 import RowActions from "@/app/components/RowActions";
 import type { GridColDef } from "@mui/x-data-grid";
+import type { MaterialRow } from "../types";
 
-interface MaterialRow {
-  id: number;
-  name: string;
-  stockQuantity: number;
-  requiredQuantity: number;
-}
 
 interface ProductDetailsGridColumnsProps {
   onEdit: (material: MaterialRow) => void;

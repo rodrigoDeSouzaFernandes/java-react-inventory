@@ -10,7 +10,7 @@ export interface ProductMaterialFormData {
 }
 
 export interface ProductMaterialFormProps {
-  materials?: RawMaterialOption[];
+  materials: RawMaterialOption[];
   defaultValues?: Partial<ProductMaterialFormData>;
   onSubmit: (data: ProductMaterialFormData) => void;
   onCancel?: () => void;

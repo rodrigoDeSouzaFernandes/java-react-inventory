@@ -36,3 +36,8 @@ export interface ProductMaterial {
   rawMaterialId: number;
   requiredQuantity: number;
 }
+
+export type ProductMaterialUpdateDTO = Pick<
+  ProductMaterial,
+  "requiredQuantity"
+>;

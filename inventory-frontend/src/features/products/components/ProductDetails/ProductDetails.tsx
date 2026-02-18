@@ -15,6 +15,8 @@ import { productDetailsGridColumns } from "./grid/gridColumns";
 import { formatCurrency } from "@/utils/currency";
 import AddProductRawMaterialDialog from "../AddProductRawMaterialDialog/AddProductRawMaterialDialog";
 import { useState } from "react";
+import EditProductRawMaterialDialog from "../EditProductRawMaterialDialog/EditProductRawMaterialDialog";
+import type { MaterialRow } from "./types";
 
 interface ProductDetailsProps {
   productId: number;
@@ -26,8 +28,24 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
   const [addMaterialDialogOpen, setAddMaterialDialogOpen] =
     useState<boolean>(false);
 
+  const [editMaterialQuantityDialogProps, setEditMaterialQuantityDialogProps] =
+    useState<{
+      open: boolean;
+      material: MaterialRow | null;
+    }>({
+      open: false,
+      material: null,
+    });
+
   const closeAddMaterialDialog = () => setAddMaterialDialogOpen(false);
   const openAddMaterialDialog = () => setAddMaterialDialogOpen(true);
+
+  const closeEditMaterialQuantityDialog = () =>
+    setEditMaterialQuantityDialogProps({ open: false, material: null });
+
+  const openEditMaterialQuantityDialog = (material: MaterialRow) => {
+    setEditMaterialQuantityDialogProps({ open: true, material });
+  };
 
   if (isLoading) {
     return <Typography>Loading...</Typography>;
@@ -45,7 +63,7 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
   }
 
   const columns = productDetailsGridColumns({
-    onEdit: (material) => console.log("Edit material", material),
+    onEdit: openEditMaterialQuantityDialog,
     onDelete: (material) => console.log("Delete material", material),
   });
 
@@ -147,6 +165,11 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
       <AddProductRawMaterialDialog
         open={addMaterialDialogOpen}
         onClose={closeAddMaterialDialog}
+        product={product}
+      />
+      <EditProductRawMaterialDialog
+        {...editMaterialQuantityDialogProps}
+        onClose={closeEditMaterialQuantityDialog}
         product={product}
       />
     </Box>

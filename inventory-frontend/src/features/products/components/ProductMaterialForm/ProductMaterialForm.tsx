@@ -7,25 +7,22 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import { productMaterialSchema } from "./schemas/productMaterialSchema";
+import { productMaterialSchema } from "../AddProductRawMaterialDialog/schemas/productMaterialSchema";
 import type {
   ProductMaterialFormData,
   ProductMaterialFormProps,
-} from "./types";
+} from "../AddProductRawMaterialDialog/types";
 
 const ProductMaterialForm = ({
-  materials,
+  materials = [],
   defaultValues,
   onSubmit,
   onCancel,
   isLoading = false,
+  isUpdate = false,
 }: ProductMaterialFormProps) => {
   const form = useForm<ProductMaterialFormData>({
-    defaultValues: {
-      rawMaterial: null,
-      requiredQuantity: 1,
-      ...defaultValues,
-    },
+    defaultValues,
     resolver: zodResolver(productMaterialSchema),
   });
 
@@ -38,6 +35,7 @@ const ProductMaterialForm = ({
           render={({ field, fieldState }) => (
             <Autocomplete
               {...field}
+              disabled={isUpdate}
               options={materials}
               getOptionLabel={(option) => option.name}
               isOptionEqualToValue={(option, value) => option.id === value?.id}

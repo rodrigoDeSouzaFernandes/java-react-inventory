@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { GridCloseIcon } from "@mui/x-data-grid";
 import type { ProductWithMaterials } from "../../types";
-import ProductMaterialForm from "./ProductMaterialForm";
+import ProductMaterialForm from "../ProductMaterialForm";
 import { useMaterialsList } from "@/features/materials/hooks/useMaterialsList";
 import { useMemo } from "react";
 import LoadingSkeleton from "./LoadingSkeleton";
@@ -113,6 +113,10 @@ const AddProductRawMaterialDialog = ({
             materials={materialsList}
             onCancel={onClose}
             isLoading={isPending}
+            defaultValues={{
+              rawMaterial: null,
+              requiredQuantity: 1,
+            }}
           />
         )}
       </DialogContent>
