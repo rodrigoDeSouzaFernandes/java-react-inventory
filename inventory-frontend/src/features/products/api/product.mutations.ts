@@ -1,4 +1,5 @@
 import api from "@/lib/client/axios";
+import type { Product, ProductCreateDTO, ProductUpdateDTO } from "../types";
 
 export const updateProduct = async (
   product: ProductUpdateDTO,

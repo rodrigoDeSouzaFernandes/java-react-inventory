@@ -30,3 +30,9 @@ export interface ProductWithMaterials {
     requiredQuantity: number;
   }[];
 }
+
+export interface ProductMaterial {
+  productId: number;
+  rawMaterialId: number;
+  requiredQuantity: number;
+}

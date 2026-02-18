@@ -13,6 +13,8 @@ import ProductMaterialForm from "./ProductMaterialForm";
 import { useMaterialsList } from "@/features/materials/hooks/useMaterialsList";
 import { useMemo } from "react";
 import LoadingSkeleton from "./LoadingSkeleton";
+import { useAddMaterialToProduct } from "../../hooks/useAddMaterialToProduct";
+import type { ProductMaterialFormData } from "./types";
 
 interface AddProductRawMaterialDialogProps {
   open: boolean;
@@ -30,6 +32,29 @@ const AddProductRawMaterialDialog = ({
     isLoading: isMaterialsListLoading,
     isError,
   } = useMaterialsList();
+
+  const { mutate: addMaterial, isPending } = useAddMaterialToProduct();
+
+  const handleAddMaterial = (formData: ProductMaterialFormData) => {
+    if (
+      !product?.id ||
+      !formData?.rawMaterial?.id ||
+      !formData?.requiredQuantity
+    ) {
+      return;
+    }
+
+    addMaterial(
+      {
+        productId: product?.id,
+        rawMaterialId: formData.rawMaterial?.id,
+        requiredQuantity: formData.requiredQuantity,
+      },
+      {
+        onSuccess: onClose,
+      },
+    );
+  };
 
   const materialsList = useMemo(
     () =>
@@ -84,9 +109,10 @@ const AddProductRawMaterialDialog = ({
           <LoadingSkeleton />
         ) : (
           <ProductMaterialForm
-            onSubmit={(formData) => console.log(formData)}
+            onSubmit={handleAddMaterial}
             materials={materialsList}
             onCancel={onClose}
+            isLoading={isPending}
           />
         )}
       </DialogContent>
