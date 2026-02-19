@@ -1,8 +1,4 @@
-import {
-  Box,
-  Typography,
-  Button,
-} from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useMaterialsList } from "../../hooks/useMaterialsList";
 
@@ -67,13 +63,16 @@ const MaterialsList = () => {
       <Box
         component="section"
         aria-label="Materials table"
-        sx={{ height: 400, width: "100%" }}
+        sx={{
+          height: { xs: "calc(100vh - 80px)", sm: "calc(100vh - 150px)" },
+          width: "100%",
+          flex: "1",
+        }}
       >
         <DataGrid
           loading={isMaterialsListLoading}
           rows={materialsRows}
           columns={columns}
-          autoHeight
         />
       </Box>
 

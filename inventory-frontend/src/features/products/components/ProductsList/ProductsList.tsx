@@ -65,7 +65,7 @@ const ProductsList = () => {
           justifyContent: "space-between",
           alignItems: "center",
           mb: 2,
-          flexWrap: 'wrap'
+          flexWrap: "wrap",
         }}
         aria-label="Products header"
       >
@@ -73,7 +73,14 @@ const ProductsList = () => {
           Products
         </Typography>
 
-        <Box sx={{ display: "flex", gap: 2, alignItems: "center", flexWrap: 'wrap' }}>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            alignItems: "center",
+            flexWrap: "wrap",
+          }}
+        >
           <FormControlLabel
             control={
               <Switch
