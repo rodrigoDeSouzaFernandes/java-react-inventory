@@ -12,7 +12,7 @@ vi.mock("../api/product.queries", () => ({
 
 const mockedGetProducts = vi.mocked(getProducts);
 
-const setupHook = () => {
+const createWrapper = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { retry: false },
@@ -39,7 +39,7 @@ describe("useProductsList", () => {
 
     mockedGetProducts.mockResolvedValue(mockProducts);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useProductsList(false), { wrapper });
 
@@ -57,7 +57,7 @@ describe("useProductsList", () => {
 
     mockedGetProducts.mockResolvedValue(mockProducts);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useProductsList(true), { wrapper });
 
@@ -72,7 +72,7 @@ describe("useProductsList", () => {
     const error = new Error("Failed to fetch products");
     mockedGetProducts.mockRejectedValue(error);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useProductsList(false), { wrapper });
 
@@ -84,7 +84,7 @@ describe("useProductsList", () => {
   it("should have correct query key based on productibleOnly parameter", async () => {
     mockedGetProducts.mockResolvedValue([]);
 
-    const { wrapper, queryClient } = setupHook();
+    const { wrapper, queryClient } = createWrapper();
 
     renderHook(() => useProductsList(true), { wrapper });
 

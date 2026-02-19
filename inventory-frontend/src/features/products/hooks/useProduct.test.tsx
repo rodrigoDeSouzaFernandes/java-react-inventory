@@ -15,7 +15,7 @@ const mockedGetProductById = vi.mocked(getProductById);
 const PRODUCT_ID = 1;
 const NOT_FOUND_PRODUCT_ID = 999;
 
-const setupHook = () => {
+const createWrapper = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { retry: false },
@@ -47,7 +47,7 @@ describe("useProduct", () => {
 
     mockedGetProductById.mockResolvedValue(mockProduct);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useProduct(PRODUCT_ID), { wrapper });
 
@@ -62,7 +62,7 @@ describe("useProduct", () => {
     const error = new Error("Product not found");
     mockedGetProductById.mockRejectedValue(error);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useProduct(NOT_FOUND_PRODUCT_ID), { wrapper });
 
@@ -80,7 +80,7 @@ describe("useProduct", () => {
       materials: [],
     });
 
-    const { wrapper, queryClient } = setupHook();
+    const { wrapper, queryClient } = createWrapper();
 
     renderHook(() => useProduct(PRODUCT_ID), { wrapper });
 

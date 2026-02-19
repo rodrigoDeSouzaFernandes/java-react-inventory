@@ -25,7 +25,7 @@ const RAW_MATERIAL_ID = 2;
 const REQUIRED_QUANTITY = 50;
 const INVALID_QUANTITY = -1;
 
-const setupHook = () => {
+const createWrapper = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { retry: false },
@@ -50,7 +50,7 @@ describe("useUpdateProductMaterialQuantity", () => {
   it("should call API, invalidate products query and show success message", async () => {
     mockedUpdateProductMaterialQuantity.mockResolvedValue(undefined);
 
-    const { wrapper, invalidateSpy } = setupHook();
+    const { wrapper, invalidateSpy } = createWrapper();
 
     const { result } = renderHook(() => useUpdateProductMaterialQuantity(), {
       wrapper,
@@ -94,7 +94,7 @@ describe("useUpdateProductMaterialQuantity", () => {
 
     mockedUpdateProductMaterialQuantity.mockRejectedValue(apiError);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useUpdateProductMaterialQuantity(), {
       wrapper,
@@ -130,7 +130,7 @@ describe("useUpdateProductMaterialQuantity", () => {
 
     mockedUpdateProductMaterialQuantity.mockRejectedValue(apiError);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useUpdateProductMaterialQuantity(), {
       wrapper,
@@ -157,7 +157,7 @@ describe("useUpdateProductMaterialQuantity", () => {
 
     mockedUpdateProductMaterialQuantity.mockRejectedValue(apiError);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useUpdateProductMaterialQuantity(), {
       wrapper,

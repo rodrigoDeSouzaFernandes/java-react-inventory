@@ -21,7 +21,7 @@ const mockedEnqueueSnackbar = vi.mocked(enqueueSnackbar);
 const PRODUCT_ID = 1;
 const NOT_FOUND_PRODUCT_ID = 999;
 
-const setupHook = () => {
+const createWrapper = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { retry: false },
@@ -46,7 +46,7 @@ describe("useUpdateProduct", () => {
   it("should call API, invalidate products query and show success message", async () => {
     mockedUpdateProduct.mockResolvedValue(undefined);
 
-    const { wrapper, invalidateSpy } = setupHook();
+    const { wrapper, invalidateSpy } = createWrapper();
 
     const { result } = renderHook(() => useUpdateProduct(), { wrapper });
 
@@ -84,7 +84,7 @@ describe("useUpdateProduct", () => {
 
     mockedUpdateProduct.mockRejectedValue(apiError);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useUpdateProduct(), { wrapper });
 
@@ -115,7 +115,7 @@ describe("useUpdateProduct", () => {
 
     mockedUpdateProduct.mockRejectedValue(apiError);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useUpdateProduct(), { wrapper });
 
@@ -136,7 +136,7 @@ describe("useUpdateProduct", () => {
 
     mockedUpdateProduct.mockRejectedValue(apiError);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useUpdateProduct(), { wrapper });
 

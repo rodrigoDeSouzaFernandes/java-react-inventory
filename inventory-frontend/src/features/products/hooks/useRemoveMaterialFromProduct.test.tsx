@@ -23,7 +23,7 @@ const RAW_MATERIAL_ID = 2;
 const NOT_FOUND_PRODUCT_ID = 999;
 const NOT_FOUND_RAW_MATERIAL_ID = 888;
 
-const setupHook = () => {
+const createWrapper = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { retry: false },
@@ -48,7 +48,7 @@ describe("useRemoveMaterialFromProduct", () => {
   it("should call API, invalidate products query and show success message", async () => {
     mockedRemoveMaterialFromProduct.mockResolvedValue(undefined);
 
-    const { wrapper, invalidateSpy } = setupHook();
+    const { wrapper, invalidateSpy } = createWrapper();
 
     const { result } = renderHook(() => useRemoveMaterialFromProduct(), {
       wrapper,
@@ -90,7 +90,7 @@ describe("useRemoveMaterialFromProduct", () => {
 
     mockedRemoveMaterialFromProduct.mockRejectedValue(apiError);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useRemoveMaterialFromProduct(), {
       wrapper,
@@ -124,7 +124,7 @@ describe("useRemoveMaterialFromProduct", () => {
 
     mockedRemoveMaterialFromProduct.mockRejectedValue(apiError);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useRemoveMaterialFromProduct(), {
       wrapper,
@@ -150,7 +150,7 @@ describe("useRemoveMaterialFromProduct", () => {
 
     mockedRemoveMaterialFromProduct.mockRejectedValue(apiError);
 
-    const { wrapper } = setupHook();
+    const { wrapper } = createWrapper();
 
     const { result } = renderHook(() => useRemoveMaterialFromProduct(), {
       wrapper,

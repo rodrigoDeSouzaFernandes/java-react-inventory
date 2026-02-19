@@ -55,7 +55,6 @@ describe("useProductsFilter", () => {
       ),
     });
 
-    // Simulate checkbox checked
     const changeEvent = {
       target: { checked: true },
     } as React.ChangeEvent<HTMLInputElement, Element>;
@@ -74,7 +73,6 @@ describe("useProductsFilter", () => {
       ),
     });
 
-    // Simulate checkbox unchecked
     const changeEvent = {
       target: { checked: false },
     } as React.ChangeEvent<HTMLInputElement, Element>;
