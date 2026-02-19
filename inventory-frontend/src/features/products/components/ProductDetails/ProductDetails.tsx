@@ -7,10 +7,12 @@ import {
   Grid,
   Alert,
   AlertTitle,
+  IconButton,
+  Stack,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useProduct } from "../../hooks/useProduct";
-import { Add } from "@mui/icons-material";
+import { Add, ArrowBack } from "@mui/icons-material";
 import { productDetailsGridColumns } from "./grid/gridColumns";
 import { formatCurrency } from "@/utils/currency";
 import AddProductRawMaterialDialog from "../AddProductRawMaterialDialog/AddProductRawMaterialDialog";
@@ -18,12 +20,15 @@ import { useMemo, useState } from "react";
 import EditProductRawMaterialDialog from "../EditProductRawMaterialDialog/EditProductRawMaterialDialog";
 import type { MaterialRow } from "./types";
 import RemoveMaterialFromProductDialog from "../RemoveMaterialFromProductDialog";
+import { useNavigate } from "react-router";
 
 interface ProductDetailsProps {
   productId: number;
 }
 
 const ProductDetails = ({ productId }: ProductDetailsProps) => {
+  const navigate = useNavigate();
+
   const { data: product, isLoading, isError } = useProduct(productId);
 
   const [addMaterialDialogOpen, setAddMaterialDialogOpen] =
@@ -63,11 +68,16 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
     setRemoveMaterialDialogProps({ open: true, material });
   };
 
-  if (isLoading) {
-    return <Typography>Loading...</Typography>;
-  }
+  const columns = useMemo(
+    () =>
+      productDetailsGridColumns({
+        onEdit: openEditMaterialQuantityDialog,
+        onDelete: openRemoveMaterialDialog,
+      }),
+    [],
+  );
 
-  if (isError || !product) {
+  if (isError) {
     return (
       <Alert severity="error">
         <AlertTitle>Error</AlertTitle>
@@ -78,27 +88,23 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
     );
   }
 
-  const columns = useMemo(
-    () =>
-      productDetailsGridColumns({
-        onEdit: openEditMaterialQuantityDialog,
-        onDelete: openRemoveMaterialDialog,
-      }),
-    [],
-  );
-
   return (
     <Box sx={{ p: 3 }}>
       <Card sx={{ mb: 3, p: 2, pb: 0 }}>
         <CardContent>
-          <Typography
-            component="h1"
-            variant="h4"
-            sx={{ fontWeight: 600, mb: 2 }}
-            fontSize={{ xs: 32, sm: 40 }}
-          >
-            {product?.name}
-          </Typography>
+          <Stack direction={"row"} alignItems={"center"} mb={2} gap={2}>
+            <IconButton onClick={() => navigate(-1)}>
+              <ArrowBack />
+            </IconButton>
+            <Typography
+              component="h1"
+              variant="h4"
+              sx={{ fontWeight: 600 }}
+              fontSize={{ xs: 32, sm: 40 }}
+            >
+              {product?.name}
+            </Typography>
+          </Stack>
           <Grid
             container
             sx={{ display: "flex", flexWrap: "wrap" }}
@@ -185,22 +191,26 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
         />
       </Box>
 
-      <AddProductRawMaterialDialog
-        open={addMaterialDialogOpen}
-        onClose={closeAddMaterialDialog}
-        product={product}
-      />
-      <EditProductRawMaterialDialog
-        {...editMaterialQuantityDialogProps}
-        onClose={closeEditMaterialQuantityDialog}
-        product={product}
-      />
+      {product && (
+        <>
+          <AddProductRawMaterialDialog
+            open={addMaterialDialogOpen}
+            onClose={closeAddMaterialDialog}
+            product={product}
+          />
+          <EditProductRawMaterialDialog
+            {...editMaterialQuantityDialogProps}
+            onClose={closeEditMaterialQuantityDialog}
+            product={product}
+          />
 
-      <RemoveMaterialFromProductDialog
-        {...removeMaterialDialogProps}
-        onClose={closeRemoveMaterialDialog}
-        product={product}
-      />
+          <RemoveMaterialFromProductDialog
+            {...removeMaterialDialogProps}
+            onClose={closeRemoveMaterialDialog}
+            product={product}
+          />
+        </>
+      )}
     </Box>
   );
 };
