@@ -40,10 +40,14 @@ const ProductsList = () => {
     openEditDialog,
   } = useProductListDialogs();
 
-  const columns = productGridColumns({
-    onEdit: openEditDialog,
-    onDelete: openDeleteDialog,
-  });
+  const columns = useMemo(
+    () =>
+      productGridColumns({
+        onEdit: openEditDialog,
+        onDelete: openDeleteDialog,
+      }),
+    [],
+  );
 
   const productsRows: ProductRow[] = useMemo(
     () =>
@@ -86,7 +90,7 @@ const ProductsList = () => {
               <Switch
                 checked={productibleOnly}
                 onChange={handleToogleProductibleOnly}
-                inputProps={{ "aria-label": "Show producible only products" }}
+                inputProps={{ "aria-label": "Show productible only products" }}
               />
             }
             label="Producible only"

@@ -9,6 +9,7 @@ import type { Material } from "../../types";
 import DeleteMaterialDialog from "../DeleteMaterialDialog/DeleteMaterialDialog";
 import EditMaterialDialog from "../EditMaterialDialog";
 import { useMaterialListDialogs } from "./hooks/useMaterialListDialogs";
+import { useMemo } from "react";
 
 const MaterialsList = () => {
   const { data: materials, isLoading: isMaterialsListLoading } =
@@ -25,10 +26,14 @@ const MaterialsList = () => {
     openEditDialog,
   } = useMaterialListDialogs();
 
-  const columns = materialGridColumns({
-    onEdit: openEditDialog,
-    onDelete: openDeleteDialog,
-  });
+  const columns = useMemo(
+    () =>
+      materialGridColumns({
+        onEdit: openEditDialog,
+        onDelete: openDeleteDialog,
+      }),
+    [],
+  );
 
   const materialsRows: Material[] = materials || [];
 

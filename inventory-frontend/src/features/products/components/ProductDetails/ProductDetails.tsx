@@ -14,7 +14,7 @@ import { Add } from "@mui/icons-material";
 import { productDetailsGridColumns } from "./grid/gridColumns";
 import { formatCurrency } from "@/utils/currency";
 import AddProductRawMaterialDialog from "../AddProductRawMaterialDialog/AddProductRawMaterialDialog";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import EditProductRawMaterialDialog from "../EditProductRawMaterialDialog/EditProductRawMaterialDialog";
 import type { MaterialRow } from "./types";
 import RemoveMaterialFromProductDialog from "../RemoveMaterialFromProductDialog";
@@ -78,10 +78,14 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
     );
   }
 
-  const columns = productDetailsGridColumns({
-    onEdit: openEditMaterialQuantityDialog,
-    onDelete: openRemoveMaterialDialog,
-  });
+  const columns = useMemo(
+    () =>
+      productDetailsGridColumns({
+        onEdit: openEditMaterialQuantityDialog,
+        onDelete: openRemoveMaterialDialog,
+      }),
+    [],
+  );
 
   return (
     <Box sx={{ p: 3 }}>

@@ -14,7 +14,7 @@ export const useUpdateProductMaterialQuantity = () => {
         queryKey: ["products"],
         exact: false,
       });
-      enqueueSnackbar("Material added to product successfully.", {
+      enqueueSnackbar("Required quantity updated successfully.", {
         variant: "success",
       });
     },
