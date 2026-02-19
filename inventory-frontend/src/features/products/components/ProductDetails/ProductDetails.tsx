@@ -21,6 +21,7 @@ import EditProductRawMaterialDialog from "../EditProductRawMaterialDialog/EditPr
 import type { MaterialRow } from "./types";
 import RemoveMaterialFromProductDialog from "../RemoveMaterialFromProductDialog";
 import { useNavigate } from "react-router";
+import { useProductDetailsDialogs } from "./hooks/useProductDetailsDialogs";
 
 interface ProductDetailsProps {
   productId: number;
@@ -31,42 +32,17 @@ const ProductDetails = ({ productId }: ProductDetailsProps) => {
 
   const { data: product, isLoading, isError } = useProduct(productId);
 
-  const [addMaterialDialogOpen, setAddMaterialDialogOpen] =
-    useState<boolean>(false);
-
-  const [editMaterialQuantityDialogProps, setEditMaterialQuantityDialogProps] =
-    useState<{
-      open: boolean;
-      material: MaterialRow | null;
-    }>({
-      open: false,
-      material: null,
-    });
-
-  const [removeMaterialDialogProps, setRemoveMaterialDialogProps] = useState<{
-    open: boolean;
-    material: MaterialRow | null;
-  }>({
-    open: false,
-    material: null,
-  });
-
-  const closeAddMaterialDialog = () => setAddMaterialDialogOpen(false);
-  const openAddMaterialDialog = () => setAddMaterialDialogOpen(true);
-
-  const closeEditMaterialQuantityDialog = () =>
-    setEditMaterialQuantityDialogProps({ open: false, material: null });
-
-  const openEditMaterialQuantityDialog = (material: MaterialRow) => {
-    setEditMaterialQuantityDialogProps({ open: true, material });
-  };
-
-  const closeRemoveMaterialDialog = () =>
-    setRemoveMaterialDialogProps({ open: false, material: null });
-
-  const openRemoveMaterialDialog = (material: MaterialRow) => {
-    setRemoveMaterialDialogProps({ open: true, material });
-  };
+  const {
+    addMaterialDialogOpen,
+    closeAddMaterialDialog,
+    closeEditMaterialQuantityDialog,
+    closeRemoveMaterialDialog,
+    editMaterialQuantityDialogProps,
+    openAddMaterialDialog,
+    openEditMaterialQuantityDialog,
+    openRemoveMaterialDialog,
+    removeMaterialDialogProps,
+  } = useProductDetailsDialogs();
 
   const columns = useMemo(
     () =>
