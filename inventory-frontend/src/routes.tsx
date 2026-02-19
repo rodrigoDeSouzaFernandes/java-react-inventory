@@ -3,6 +3,7 @@ import ProductsPage from "./app/pages/ProductsPage";
 import MaterialsPage from "./app/pages/MaterialsPage";
 import ProductDetailsPage from "./app/pages/ProductDetailsPage";
 import MainLayout from "./app/layouts/MainLayout";
+import ProductionSuggestionPage from "./app/pages/ProductionSuggestionPage";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
       {
         path: "/raw-materials",
         Component: MaterialsPage,
+      },
+      {
+        path: "/production-suggestion",
+        Component: ProductionSuggestionPage,
       },
       {
         path: "*",
