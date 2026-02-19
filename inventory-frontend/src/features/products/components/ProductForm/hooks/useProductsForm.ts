@@ -12,7 +12,7 @@ export const useProductForm = ({ defaultValues }: UseProductFormProps) => {
     resolver: zodResolver(productSchema),
     defaultValues: {
       name: defaultValues?.name ?? "",
-      price: defaultValues?.price ?? "R$ 0,00",
+      price: defaultValues?.price ?? "$0,00",
     },
   });
 

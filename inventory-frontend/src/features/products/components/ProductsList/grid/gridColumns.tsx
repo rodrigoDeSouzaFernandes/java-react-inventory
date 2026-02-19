@@ -1,5 +1,6 @@
 import RowActions from "@/app/components/RowActions";
 import type { ProductRow } from "@/features/products/types";
+import { parseCurrencyToNumber } from "@/utils/currency";
 import type { GridColDef } from "@mui/x-data-grid";
 
 interface ProductGridColumnsProps {
@@ -18,6 +19,8 @@ export const productGridColumns = ({
     align: "left",
     flex: 1,
     minWidth: 120,
+    sortComparator: (a, b) =>
+      parseCurrencyToNumber(a) - parseCurrencyToNumber(b),
   },
   {
     field: "producibleQuantity",

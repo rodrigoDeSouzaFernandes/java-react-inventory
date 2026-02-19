@@ -1,7 +1,7 @@
 export const formatCurrency = (value: number): string =>
-  value.toLocaleString("pt-BR", {
+  value.toLocaleString("en-US", {
     style: "currency",
-    currency: "BRL",
+    currency: "USD",
   });
 
 export function formatCurrencyFromInput(value: string): string {
