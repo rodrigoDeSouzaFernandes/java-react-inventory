@@ -38,7 +38,7 @@ export const Sidebar = ({ onLinkClick }: SidebarProps) => {
           noWrap
           color={theme.palette.primary.contrastText}
         >
-          Inventory
+          Inventory Control
         </Typography>
       </Toolbar>
       <List>

@@ -37,7 +37,7 @@ export const MobileMenu = () => {
         }}
       >
         <Typography variant="h6" component="h1" noWrap>
-          Inventory
+          Inventory Control
         </Typography>
         <IconButton
           color="inherit"
