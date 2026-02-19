@@ -16,8 +16,6 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { menuItems } from "./menuItems";
 
-
-
 export const MobileMenu = () => {
   const [open, setOpen] = useState(false);
 
