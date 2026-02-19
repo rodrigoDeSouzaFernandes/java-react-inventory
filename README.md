@@ -1,6 +1,6 @@
 # Inventory Management System
 
-![Inventory Demo](./inventory.gif)
+![Inventory Demo](./inventory_preview.gif)
 
 ## About the Project
 
@@ -26,6 +26,7 @@
 - Relationship: 1 Concrete Block = 2 units of Cement
 
 If there are 100 units of Cement in stock:
+
 - It is possible to produce 50 Concrete Blocks
 
 ---
