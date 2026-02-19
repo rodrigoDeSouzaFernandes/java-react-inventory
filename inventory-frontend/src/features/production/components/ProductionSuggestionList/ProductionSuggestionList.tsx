@@ -1,16 +1,16 @@
 import { Box, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import { useProductionSuggestion } from "../../hooks/useProductionSuggestion";
 import { formatCurrency } from "@/utils/currency";
 
 import { useMemo } from "react";
 import { green } from "@mui/material/colors";
 
-const columns = [
-  { field: "name", headerName: "Product", flex: 2 },
-  { field: "unitValue", headerName: "Unit Value", flex: 1 },
-  { field: "quantity", headerName: "Quantity", flex: 1 },
-  { field: "total", headerName: "Total", flex: 1 },
+const columns: GridColDef[] = [
+  { field: "name", headerName: "Product", flex: 2, minWidth: 150 },
+  { field: "unitValue", headerName: "Unit Value", flex: 1, minWidth: 120 },
+  { field: "quantity", headerName: "Quantity", flex: 1, minWidth: 120 },
+  { field: "total", headerName: "Total", flex: 1, minWidth: 120 },
 ];
 
 const ProductionSuggestionList = () => {
@@ -40,11 +40,12 @@ const ProductionSuggestionList = () => {
           alignItems: "center",
           mb: 2,
           flexWrap: "wrap",
+          gap: 2,
         }}
         aria-label="Production Suggestions header"
       >
         <Typography component="h1" variant="h4" sx={{ fontWeight: 600 }}>
-          Production Suggestions
+          Production Suggestion
         </Typography>
 
         <Box
